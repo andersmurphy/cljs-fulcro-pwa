@@ -1,0 +1,9 @@
+.DS_Store
+.shadow-cljs/
+**.cpcache
+*.lsp
+*.clj-kondo
+/node_modules/
+docs/js/*
+!docs/index.html
+!docs/js/main.js
