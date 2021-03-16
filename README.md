@@ -12,7 +12,7 @@ Start development server:
 
 Production build:
 
-`yarn shadow-cljs release`
+`yarn shadow-cljs release main`
 
 Push changes and the project will deploy automatically to:
 
