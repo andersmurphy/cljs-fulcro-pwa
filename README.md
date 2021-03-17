@@ -8,6 +8,10 @@ Start development server:
 
 `yarn shadow-cljs server`
 
+Or (if you just want compile and watch):
+
+`shadow-cljs watch main`
+
 ## Deploy
 
 Production build:
