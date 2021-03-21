@@ -1,11 +1,11 @@
 (ns cljs-fulcro-pwa.ui
   (:require
    [com.fulcrologic.fulcro.components :as comp :refer [defsc]]
-   [com.fulcrologic.fulcro.dom :as dom :refer [div p li h5 h4 ul]]))
+   [com.fulcrologic.fulcro.dom :as dom :refer [div li h5 h4 ul]]))
 
-(defsc Person [this {:person/keys [name age]}]
+(defsc Person [_ {:person/keys [name age]}]
   {:initial-state
-   (fn [{:keys [name age] :as params}]
+   (fn [{:keys [name age]}]
      {:person/name name
       :person/age  age})}
   (li
@@ -13,7 +13,7 @@
 
 (def ui-person (comp/factory Person {:keyfn :person/name}))
 
-(defsc PersonList [this {:list/keys [label people]}]
+(defsc PersonList [_ {:list/keys [label people]}]
   {:initial-state
    (fn [{:keys [label]}]
      {:list/label label
@@ -30,10 +30,10 @@
 
 (def ui-person-list (comp/factory PersonList))
 
-(defsc Root [this {:keys [friends enemies]}]
+(defsc Root [_ {:keys [friends enemies]}]
   {:initial-state
-   (fn [params] {:friends (comp/get-initial-state PersonList {:label "Friends"})
-                 :enemies (comp/get-initial-state PersonList {:label "Enemies"})})}
+   (fn [_] {:friends (comp/get-initial-state PersonList {:label "Friends"})
+            :enemies (comp/get-initial-state PersonList {:label "Enemies"})})}
   (div
    (ui-person-list friends)
    (ui-person-list enemies)))
