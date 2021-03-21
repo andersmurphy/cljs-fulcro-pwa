@@ -2,7 +2,7 @@
   (:require
    [cljs-fulcro-pwa.ui :as ui]
    [com.fulcrologic.fulcro.application :as app]
-   [com.fulcrologic.fulcro.components :as comp]))
+   [com.fulcrologic.fulcro.components :as c]))
 
 (defonce app (app/fulcro-app))
 
@@ -18,5 +18,5 @@
   ;; re-mounting will cause forced UI refresh, update internals, etc.
   (app/mount! app ui/Root "app")
   ;; As of Fulcro 3.3.0, this addition will help with stale queries when using dynamic routing:
-  (comp/refresh-dynamic-queries! app)
+  (c/refresh-dynamic-queries! app)
   (js/console.log "Hot reload"))
