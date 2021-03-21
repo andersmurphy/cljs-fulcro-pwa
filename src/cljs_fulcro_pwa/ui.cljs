@@ -13,7 +13,7 @@
 (def ui-person (comp/factory Person {:keyfn :person/name}))
 
 (defsc PersonList [_ {:list/keys [label people]}]
-  {:query [:list/label {:list/people [comp/get-query Person]}]
+  {:query [:list/label {:list/people (comp/get-query Person)}]
    :initial-state
    (fn [{:keys [label]}]
      {:list/label label
