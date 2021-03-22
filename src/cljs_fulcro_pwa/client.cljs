@@ -2,7 +2,8 @@
   (:require
    [cljs-fulcro-pwa.ui :as ui]
    [com.fulcrologic.fulcro.application :as app]
-   [com.fulcrologic.fulcro.components :as c]))
+   [com.fulcrologic.fulcro.components :as c]
+   [com.fulcrologic.fulcro.algorithms.denormalize :as fdn]))
 
 (defonce app (app/fulcro-app))
 
@@ -20,3 +21,11 @@
   ;; As of Fulcro 3.3.0, this addition will help with stale queries when using dynamic routing:
   (c/refresh-dynamic-queries! app)
   (js/console.log "Hot reload"))
+
+(comment ;; useful repl functions
+  (c/get-initial-state ui/Root {})
+  (app/current-state app)
+  (fdn/db->tree
+   [{:friends [:list/label]}]
+   (c/get-initial-state ui/Root {})
+   {}))
