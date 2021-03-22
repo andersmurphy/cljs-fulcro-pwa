@@ -4,17 +4,19 @@ Install dependencies:
 
 `yarn install`
 
-# Repl
+## Repl
 
 Start a repl:
 
 `yarn shadow-cljs clj-repl`
 
-Run watch command:
+Run the watch command:
 
 `(shadow/watch :main)`
 
-Open `http://localhost:8000/` in your browser:
+Open your browser and got to:
+
+`http://localhost:8000/`
 
 Switch to cljs repl:
 
@@ -24,11 +26,13 @@ Eval some code:
 
 `(js/alert "foo")`
 
-If you run into this:
+If get this message after evaluating some code:
 
 `There is no connected JS runtime.`
 
-You need to open your App in the Browser at `http://localhost:8000/`.
+You need to open your App in the browser at:
+
+`http://localhost:8000/`
 
 You can quit the cljs repl and return to the shadow repl with:
 
@@ -47,3 +51,9 @@ Or from the shadow repl:
 Push changes and the project will deploy automatically to:
 
 https://andersmurphy.github.io/cljs-fulcro-pwa/
+
+## Documentation
+
+[shadow-cljs](https://shadow-cljs.github.io/docs/UsersGuide.html)
+
+[fulcro](https://book.fulcrologic.com/)
