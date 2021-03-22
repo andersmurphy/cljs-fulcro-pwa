@@ -1,7 +1,6 @@
 {:deps     {:aliases [:dev]}
  :dev-http {8000 "docs"}
  :nrepl false
- :socket-repl {:port 9000}
  :builds   {:main {:target     :browser
                    :output-dir "docs/js"
                    :asset-path "/js"
