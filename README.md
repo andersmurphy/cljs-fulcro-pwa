@@ -12,7 +12,7 @@ Start a repl:
 
 Run the watch command:
 
-`(shadow/watch :main)`
+`(shadow/watch :app)`
 
 Open your browser and got to:
 
@@ -20,7 +20,7 @@ Open your browser and got to:
 
 Switch to cljs repl:
 
-`(shadow/repl :main)`
+`(shadow/repl :app)`
 
 Eval some code:
 
@@ -40,13 +40,9 @@ You can quit the cljs repl and return to the shadow repl with:
 
 ## Deploy
 
-Production build:
+Production build from the shadow repl:
 
-`yarn shadow-cljs release main`
-
-Or from the shadow repl:
-
-`(shadow/release :main)`
+`(shadow/release :app)`
 
 Push changes and the project will deploy automatically to:
 

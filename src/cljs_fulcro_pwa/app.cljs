@@ -1,4 +1,4 @@
-(ns cljs-fulcro-pwa.client
+(ns cljs-fulcro-pwa.app
   (:require
    [cljs-fulcro-pwa.ui :as ui]
    [cljs-fulcro-pwa.database :as db]
@@ -8,11 +8,17 @@
 
 (defonce app (app/fulcro-app {:initial-db db/database}))
 
+(defn register-service-worker []
+  (when (aget js/navigator "serviceWorker")
+    (-> js/navigator .-serviceWorker
+        (.register "service-worker.js"))
+    (js/console.log "[Service Worker] Registered")))
+
 (defn ^:export init
   "Shadow-cljs sets this up to be our entry-point function. See shadow-cljs.edn `:init-fn` in the modules of the main build."
   []
-  (app/mount! app ui/Root "app")
-  (js/console.log "Loaded"))
+  (register-service-worker)
+  (app/mount! app ui/Root "app"))
 
 (defn ^:export refresh
   "During development, shadow-cljs will call this on every hot reload of source. See shadow-cljs.edn"

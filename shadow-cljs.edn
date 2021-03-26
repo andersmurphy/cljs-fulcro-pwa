@@ -1,9 +1,10 @@
 {:deps     {:aliases [:dev]}
  :dev-http {8000 "docs"}
  :nrepl false
- :builds   {:main {:target     :browser
-                   :output-dir "docs/js"
-                   :asset-path "/js"
-                   :modules    {:main {:init-fn cljs-fulcro-pwa.client/init}}
-                   :devtools   {:after-load cljs-fulcro-pwa.client/refresh
-                                :preloads [com.fulcrologic.fulcro.inspect.preload]}}}}
+ :builds
+ {:app {:target     :browser
+        :output-dir "docs/js"
+        :asset-path "/js"
+        :modules    {:main {:init-fn cljs-fulcro-pwa.app/init}}
+        :devtools   {:after-load cljs-fulcro-pwa.app/refresh
+                     :preloads [com.fulcrologic.fulcro.inspect.preload]}}}}
