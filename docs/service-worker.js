@@ -2,7 +2,7 @@
 const cacheName = "cljs-fulcro-pwa-v1"
 const contentToCache =
       ["js/main.js",
-       "/",
+       "./",
        "images/icon-192.png",
        "images/icon-512.png",
        "manifest.json"]
