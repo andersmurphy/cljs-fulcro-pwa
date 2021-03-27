@@ -9,9 +9,9 @@
                {:keys [onDelete]}]
   {:query [:person/id :person/name :person/age]
    :ident (fn [] [:person/id (:person/id props)])
-   :css [[:.red {:color "red"}]]}
+   :css [[:.bold {:font-weight "bold"}]]}
   (d/li
-   (d/h5 :.red (str name " (age: " age ")"))
+   (d/h5 :.bold (str name " (age: " age ")"))
    (d/button {:onClick #(onDelete id)} "X")))
 
 (def ui-person (c/computed-factory Person {:keyfn :person/id}))
