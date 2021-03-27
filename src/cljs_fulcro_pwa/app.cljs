@@ -2,24 +2,22 @@
   (:require
    [cljs-fulcro-pwa.ui :as ui]
    [cljs-fulcro-pwa.database :as db]
+   [cljs-fulcro-pwa.release-build :refer [when-release-build]]
+   [cljs-fulcro-pwa.static-html-writer :refer [write-index-html]]
+   [cljs-fulcro-pwa.service-worker :as sw]
    [com.fulcrologic.fulcro.application :as app]
    [com.fulcrologic.fulcro.components :as c]
    [com.fulcrologic.fulcro.algorithms.denormalize :as fdn]))
 
-(goog-define service-worker-enabled? false)
-
-(defn register-service-worker []
-  (when (aget js/navigator "serviceWorker")
-    (-> js/navigator .-serviceWorker
-        (.register "service-worker.js"))
-    (js/console.log "[Service Worker] Registered")))
+;; Outputs index.html file
+(write-index-html)
 
 (defonce app (app/fulcro-app {:initial-db db/database}))
 
 (defn ^:export init
   "Shadow-cljs sets this up to be our entry-point function. See shadow-cljs.edn `:init-fn` in the modules of the main build."
   []
-  (when service-worker-enabled? (register-service-worker))
+  (when-release-build (sw/register-service-worker))
   (app/mount! app ui/Root "app"))
 
 (defn ^:export refresh

@@ -8,5 +8,4 @@
         :modules    {:main {:init-fn cljs-fulcro-pwa.app/init}}
         :devtools   {:after-load cljs-fulcro-pwa.app/refresh
                      :preloads [com.fulcrologic.fulcro.inspect.preload]}
-        :release {:closure-defines
-                  {cljs-fulcro-pwa.app/service-worker-enabled? true}}}}}
+        :release {:build-hooks [(cljs-fulcro-pwa.release-build/hook true)]}}}}
