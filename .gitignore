@@ -7,4 +7,3 @@
 docs/js/*
 !docs/index.html
 !docs/js/main.js
-!docs/js/service-worker.js

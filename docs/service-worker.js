@@ -2,6 +2,7 @@
 const cacheName = "cljs-fulcro-pwa-v1"
 const contentToCache =
       ["js/main.js",
+       "/",
        "images/icon-192.png",
        "images/icon-512.png",
        "manifest.json"]
@@ -12,9 +13,7 @@ self.addEventListener("install", (e) => {
   e.waitUntil((async () => {
     const cache = await caches.open(cacheName)
     console.log("[Service Worker] Caching all: app shell and content")
-    await cache.addAll(contentToCache)
-  })())
-})
+    await cache.addAll(contentToCache)})())})
 
 // Fetching content using Service Worker
 self.addEventListener("fetch", (e) => {
@@ -26,6 +25,13 @@ self.addEventListener("fetch", (e) => {
     const cache = await caches.open(cacheName)
     console.log(`[Service Worker] Caching new resource: ${e.request.url}`)
     cache.put(e.request, response.clone())
-    return response
-  })())
-})
+    return response})())})
+
+// Deleting old caches
+self.addEventListener("activate", (e) => {
+  e.waitUntil((async () => {
+    const keyList = await caches.keys()
+    await Promise.all(keyList.map((key) => {
+      if (key !== cacheName) {
+        console.log(`[Service Worker] Deleting old cache: ${key}`)
+        return caches.delete(key)}}))})())})
