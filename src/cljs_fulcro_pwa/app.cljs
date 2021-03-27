@@ -6,7 +6,7 @@
    [com.fulcrologic.fulcro.components :as c]
    [com.fulcrologic.fulcro.algorithms.denormalize :as fdn]))
 
-(defonce app (app/fulcro-app {:initial-db db/database}))
+(goog-define service-worker-enabled? false)
 
 (defn register-service-worker []
   (when (aget js/navigator "serviceWorker")
@@ -14,10 +14,12 @@
         (.register "service-worker.js"))
     (js/console.log "[Service Worker] Registered")))
 
+(defonce app (app/fulcro-app {:initial-db db/database}))
+
 (defn ^:export init
   "Shadow-cljs sets this up to be our entry-point function. See shadow-cljs.edn `:init-fn` in the modules of the main build."
   []
-  (register-service-worker)
+  (when service-worker-enabled? (register-service-worker))
   (app/mount! app ui/Root "app"))
 
 (defn ^:export refresh
