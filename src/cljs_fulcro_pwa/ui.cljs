@@ -1,10 +1,16 @@
 (ns cljs-fulcro-pwa.ui
   (:require
    [cljs-fulcro-pwa.mutations :as api]
-   [cljs-fulcro-pwa.release-build :refer [when-release-build]]
+   [cljs-fulcro-pwa.release-build :refer [when-not-release-build]]
    [com.fulcrologic.fulcro.components :as c :refer [defsc]]
    [com.fulcrologic.fulcro-css.localized-dom :as d]
    [com.fulcrologic.fulcro-css.css-injection :as inj]))
+
+(defn style-element
+  "Wraps style element to force hot loading css when not a release build."
+  [m]
+  (inj/style-element
+   (merge m (when-not-release-build {:react-key (str (rand-int 10000))}))))
 
 (defsc Person [_ {:person/keys [id name age] :as props}
                {:keys [onDelete]}]
@@ -39,11 +45,7 @@
    :css [[:.parent {:display "grid"
                     :place-items "center"}]]}
   (d/div
-   (inj/style-element
-    (dissoc {:component Root
-             :react-key (str (rand-int 100000))}
-            ;; only reload css when developing
-            (when-release-build :react-key)))
+   (style-element {:component Root})
    (d/div :.parent
           (ui-person-list friends)
           (ui-person-list enemies))))
