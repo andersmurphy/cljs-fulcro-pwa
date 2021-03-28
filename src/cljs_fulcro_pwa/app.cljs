@@ -17,15 +17,16 @@
 (defn ^:export init
   "Shadow-cljs sets this up to be our entry-point function. See shadow-cljs.edn `:init-fn` in the modules of the main build."
   []
+  ;; Don't register service worker when not a release build
   (when-release-build (sw/register-service-worker))
   (app/mount! app ui/Root "app"))
 
 (defn ^:export refresh
   "During development, shadow-cljs will call this on every hot reload of source. See shadow-cljs.edn"
   []
-  ;; re-mounting will cause forced UI refresh, update internals, etc.
+  ;; Re-mounting will cause forced UI refresh, update internals, etc.
   (app/mount! app ui/Root "app")
-  ;; As of Fulcro 3.3.0, this addition will help with stale queries when using dynamic routing:
+  ;; Avoid with stale queries when using dynamic routing:
   (c/refresh-dynamic-queries! app)
   (js/console.log "Hot reload"))
 

@@ -4,6 +4,7 @@
 *.lsp
 *.clj-kondo
 /node_modules/
-docs/js/*
-!docs/index.html
-!docs/js/main.js
+docs/js/manifest.edn
+docs/js/cljs-runtime
+docs/manifest.edn
+docs/cljs-runtime/
