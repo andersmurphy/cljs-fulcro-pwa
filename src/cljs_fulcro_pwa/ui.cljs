@@ -1,7 +1,8 @@
 (ns cljs-fulcro-pwa.ui
   (:require
-   [com.fulcrologic.fulcro.components :as c :refer [defsc]]
    [cljs-fulcro-pwa.mutations :as api]
+   [cljs-fulcro-pwa.release-build :refer [when-release-build]]
+   [com.fulcrologic.fulcro.components :as c :refer [defsc]]
    [com.fulcrologic.fulcro-css.localized-dom :as d]
    [com.fulcrologic.fulcro-css.css-injection :as inj]))
 
@@ -9,9 +10,9 @@
                {:keys [onDelete]}]
   {:query [:person/id :person/name :person/age]
    :ident (fn [] [:person/id (:person/id props)])
-   :css [[:.bold {:font-weight "bold"}]]}
+   :css [[:.red {:color       "red"}]]}
   (d/li
-   (d/h5 :.bold (str name " (age: " age ")"))
+   (d/h5 :.red (str name " (age: " age ")"))
    (d/button {:onClick #(onDelete id)} "X")))
 
 (def ui-person (c/computed-factory Person {:keyfn :person/id}))
@@ -38,7 +39,11 @@
    :css [[:.parent {:display "grid"
                     :place-items "center"}]]}
   (d/div
-   (inj/style-element {:component Root})
+   (inj/style-element
+    (dissoc {:component Root
+             :react-key (str (rand-int 100000))}
+            ;; only reload css when developing
+            (when-release-build :react-key)))
    (d/div :.parent
           (ui-person-list friends)
           (ui-person-list enemies))))
