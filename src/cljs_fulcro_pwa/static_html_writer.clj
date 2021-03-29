@@ -17,7 +17,7 @@
                         script-src   'self';
                         img-src      'self';
                         font-src     'self';
-                        style-src    'self unsafe-inline'"}])
+                        style-src    'self' 'unsafe-inline'"}])
     [:meta {:name "viewport" :content "width=device-width, initial-scale=1.0"}]
     [:title "CLJS PWA"]
     [:meta {:name    "description"
