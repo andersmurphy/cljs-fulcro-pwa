@@ -45,7 +45,7 @@
    :css [[:.parent {:display "grid"
                     :place-items "center"}]]}
   (d/div
-   (style-element {:component Root})
+   (inj/style-element {:component Root})
    (d/div :.parent
           (ui-person-list friends)
           (ui-person-list enemies))))
