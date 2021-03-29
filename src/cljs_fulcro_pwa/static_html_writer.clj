@@ -11,14 +11,14 @@
         [:meta {:http-equiv "Content-Security-Policy"
                 :content
                 "default-src  'none';
-                        manifest-src   'self';
-                        base-uri       'self';
-                        form-action    'self';
-                        script-src     'self';
-                        img-src        'self';
-                        font-src       'self';
-                        style-src      'self';"
-                        style-src-elem 'self' 'unsafe-inline'"}])
+                 manifest-src   'self';
+                 base-uri       'self';
+                 form-action    'self';
+                 script-src     'self';
+                 img-src        'self';
+                 font-src       'self';
+                 style-src      'self';
+                 style-src-attr 'self' 'unsafe-inline'"}])
     [:meta {:name "viewport" :content "width=device-width, initial-scale=1.0"}]
     [:title "CLJS PWA"]
     [:meta {:name    "description"
