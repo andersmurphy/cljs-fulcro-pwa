@@ -1,6 +1,5 @@
 {:paths   ["src" "docs"]
- :deps    {com.fulcrologic/fulcro            {:mvn/version "3.4.20"}
-           com.fulcrologic/fulcro-garden-css {:mvn/version "3.0.9"}}
+ :deps    {com.fulcrologic/fulcro            {:mvn/version "3.4.20"}}
  :aliases
  {:dev {:extra-deps  {org.clojure/clojurescript   {:mvn/version "1.10.764"}
                       thheller/shadow-cljs        {:mvn/version "2.11.23"}

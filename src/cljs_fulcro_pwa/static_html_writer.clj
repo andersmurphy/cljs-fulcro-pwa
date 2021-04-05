@@ -17,11 +17,13 @@
                  script-src     'self';
                  img-src        'self';
                  font-src       'self';
-                 style-src      'self' 'unsafe-inline'"}])
+                 style-src      'self'"}])
     [:meta {:name "viewport" :content "width=device-width, initial-scale=1.0"}]
+
     [:title "CLJS PWA"]
     [:meta {:name    "description"
             :content "Clojurescript progressive web app (PWA) example"}]
+    [:link {:rel "stylesheet" :type "text/css" :href "styles.css"}]
     [:link {:rel "apple-touch-icon" :href "images/icon-192.png"}]
     [:link {:rel "manifest" :href "manifest.json"}]]
    [:body

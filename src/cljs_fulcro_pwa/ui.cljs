@@ -1,24 +1,15 @@
 (ns cljs-fulcro-pwa.ui
   (:require
    [cljs-fulcro-pwa.mutations :as api]
-   [cljs-fulcro-pwa.release-build :refer [when-not-release-build]]
    [com.fulcrologic.fulcro.components :as c :refer [defsc]]
-   [com.fulcrologic.fulcro-css.localized-dom :as d]
-   [com.fulcrologic.fulcro-css.css-injection :as inj]))
-
-(defn style-element
-  "Wraps style element to force hot loading css when not a release build."
-  [m]
-  (inj/style-element
-   (merge m (when-not-release-build {:react-key (str (rand-int 10000))}))))
+   [com.fulcrologic.fulcro.dom :as d]))
 
 (defsc Person [_ {:person/keys [id name age] :as props}
                {:keys [onDelete]}]
   {:query [:person/id :person/name :person/age]
-   :ident (fn [] [:person/id (:person/id props)])
-   :css [[:.red {:color       "red"}]]}
+   :ident (fn [] [:person/id (:person/id props)])}
   (d/li
-   (d/h5 :.red (str name " (age: " age ")"))
+   (d/h5 (str name " (age: " age ")"))
    (d/button {:onClick #(onDelete id)} "X")))
 
 (def ui-person (c/computed-factory Person {:keyfn :person/id}))
@@ -41,11 +32,6 @@
 (defsc Root [_ {{:keys [friends enemies]} :list/id}]
   {:query [{:list/id [:list/id
                       {:friends (c/get-query PersonList)}
-                      {:enemies (c/get-query PersonList)}]}]
-   :css [[:.parent {:display "grid"
-                    :place-items "center"}]]}
-  (d/div
-   (style-element {:component Root})
-   (d/div :.parent
-          (ui-person-list friends)
-          (ui-person-list enemies))))
+                      {:enemies (c/get-query PersonList)}]}]}
+  (d/div (ui-person-list friends)
+         (ui-person-list enemies)))
