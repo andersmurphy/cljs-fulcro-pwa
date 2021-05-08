@@ -3,30 +3,37 @@
    [cljs-fulcro-pwa.ui :as ui]
    [cljs-fulcro-pwa.database :as db]
    [cljs-fulcro-pwa.release-build :refer [when-release-build]]
-   [cljs-fulcro-pwa.static-html-writer :refer [write-index-html]]
+   [cljs-fulcro-pwa.static-html-writer :as html-writer]
    [cljs-fulcro-pwa.service-worker :as sw]
    [com.fulcrologic.fulcro.application :as app]
    [com.fulcrologic.fulcro.components :as c]
    [com.fulcrologic.fulcro.algorithms.denormalize :as fdn]))
 
-;; Outputs index.html file
-(write-index-html)
+(html-writer/write-index
+ [:html {:lang "en"}
+  [:head
+   [:meta {:http-equiv "content-type"
+           :content    "text/html; charset=UTF-8"}]
+   [:meta {:name "viewport"
+           :content "width=device-width, initial-scale=1.0"}]
+   [:title "CLJS PWA"]
+   [:meta {:name    "description"
+           :content "This is a dercription"}]
+   [:link {:rel "stylesheet" :type "text/css" :href "styles.css"}]
+   [:link {:rel "apple-touch-icon" :href "images/icon-192.png"}]
+   [:link {:rel "manifest" :href "manifest.json"}]]
+  [:body
+   [:div {:id "app"}]
+   [:script {:src "js/main.js"}]]])
 
 (defonce app (app/fulcro-app {:initial-db db/database}))
 
-(defn ^:export init
-  "Shadow-cljs sets this up to be our entry-point function. See shadow-cljs.edn `:init-fn` in the modules of the main build."
-  []
-  ;; Don't register service worker when not a release build
+(defn ^:export init []
   (when-release-build (sw/register-service-worker))
   (app/mount! app ui/Root "app"))
 
-(defn ^:export refresh
-  "During development, shadow-cljs will call this on every hot reload of source. See shadow-cljs.edn"
-  []
-  ;; Re-mounting will cause forced UI refresh, update internals, etc.
+(defn ^:export refresh []
   (app/mount! app ui/Root "app")
-  ;; Avoid with stale queries when using dynamic routing:
   (c/refresh-dynamic-queries! app)
   (js/console.log "Hot reload"))
 
