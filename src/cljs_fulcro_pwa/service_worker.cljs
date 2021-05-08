@@ -56,9 +56,7 @@
              clj->js
              js/Promise.all)))))
 
-(defn ^:export init
-  "Shadow-cljs sets this up to be our entry-point function. See shadow-cljs.edn `:init-fn` in the modules of the main build."
-  []
+(defn ^:export init []
   (.addEventListener js/self "install"  #(.waitUntil   % (install-service-worker)))
   (.addEventListener js/self "fetch"    #(.respondWith % (fetch-content %)))
   (.addEventListener js/self "activate" #(.waitUntil   % (purge-old-caches))))

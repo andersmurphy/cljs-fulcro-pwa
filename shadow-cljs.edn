@@ -7,8 +7,7 @@
         :asset-path "/js"
         :modules    {:main {:init-fn cljs-fulcro-pwa.app/init}}
         :devtools   {:after-load cljs-fulcro-pwa.app/refresh
-                     :preloads [com.fulcrologic.fulcro.inspect.preload]}
-        :release {:build-hooks [(cljs-fulcro-pwa.release-build/hook true)]}}
+                     :preloads [com.fulcrologic.fulcro.inspect.preload]}}
   :sw {:target     :browser
        :output-dir "docs"
        :modules    {:sw {:init-fn cljs-fulcro-pwa.service-worker/init

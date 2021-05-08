@@ -38,6 +38,18 @@ You can quit the cljs repl and return to the shadow repl with:
 
 `:repl/quit`
 
+## Service Worker
+
+Remember the service worker adds a layer of caching so things like the index and static assets won't refresh on reload. You can bypass it in development by using chrome devtools:
+
+Application -> Service Workers -> Bypass for network
+
+Just remember to turn it back on when you want to test the service worker behaviour.
+
+You can also simulate being offline
+
+Application -> Service Workers -> Offline
+
 ## Deploy
 
 Production build from the shadow repl:

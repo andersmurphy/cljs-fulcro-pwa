@@ -31,6 +31,7 @@
 
 (defsc Root [_ {{:keys [friends enemies]} :list/id}]
   {:query [{:list/id [:list/id
-                      {:friends (c/get-query PersonList)}]}]}
+                      {:friends (c/get-query PersonList)}
+                      {:enemies (c/get-query PersonList)}]}]}
   (d/div (ui-person-list friends)
          (ui-person-list enemies)))

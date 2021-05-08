@@ -2,7 +2,6 @@
   (:require
    [cljs-fulcro-pwa.ui :as ui]
    [cljs-fulcro-pwa.database :as db]
-   [cljs-fulcro-pwa.release-build :refer [when-release-build]]
    [cljs-fulcro-pwa.static-html-writer :as html-writer]
    [cljs-fulcro-pwa.service-worker :as sw]
    [com.fulcrologic.fulcro.application :as app]
@@ -29,7 +28,7 @@
 (defonce app (app/fulcro-app {:initial-db db/database}))
 
 (defn ^:export init []
-  (when-release-build (sw/register-service-worker))
+  (sw/register-service-worker)
   (app/mount! app ui/Root "app"))
 
 (defn ^:export refresh []
