@@ -46,7 +46,11 @@ Application -> Service Workers -> Bypass for network
 
 Just remember to turn it back on when you want to test the service worker behaviour.
 
-You can also simulate being offline
+If your still having trouble you can unregister the current service worker:
+
+Application -> Service Workers -> Unregister
+
+You can also simulate being offline:
 
 Application -> Service Workers -> Offline
 

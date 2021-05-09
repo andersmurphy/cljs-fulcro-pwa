@@ -29,9 +29,19 @@
 
 (def ui-person-list (c/factory PersonList))
 
-(defsc Root [_ {{:keys [friends enemies]} :list/id}]
-  {:query [{:list/id [:list/id
-                      {:friends (c/get-query PersonList)}
-                      {:enemies (c/get-query PersonList)}]}]}
-  (d/div (ui-person-list friends)
-         (ui-person-list enemies)))
+(defsc Container [this {:container/keys [content] :as props}]
+  {:query [:container/id {:container/content (c/get-query PersonList)}]
+   :ident (fn [] [:container/id (:container/id props)])}
+  (let [next-person-list
+        (fn [] (c/transact!
+                this [(api/next-person-list {:container/content content})]))]
+    (d/div
+     (ui-person-list content)
+     (d/button {:onClick next-person-list} "->"))))
+
+(def ui-container (c/factory Container))
+
+(defsc Root [_ {{:keys [:main-container]} :container/id}]
+  {:query [{:container/id [:container/id
+                           {:main-container (c/get-query Container)}]}]}
+  (d/div (ui-container main-container)))

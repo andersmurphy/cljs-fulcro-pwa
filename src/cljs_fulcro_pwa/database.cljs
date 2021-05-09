@@ -14,6 +14,11 @@
              :list/label "Enemies"
              :list/people [[:person/id 3] [:person/id 4]]}})
 
+(def container-table
+  {:main-container {:container/id :main-container
+                    :container/content [:list/id :friends]}})
+
 (def database
   {:person/id person-table
-   :list/id   list-table})
+   :list/id   list-table
+   :container/id container-table})
