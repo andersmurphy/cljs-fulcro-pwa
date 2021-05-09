@@ -1,6 +1,6 @@
 (ns cljs-fulcro-pwa.service-worker)
 
-(def cache-name "cljs-fulcro-pwa-v1")
+(def cache-name "cljs-fulcro-pwa-v2")
 
 (def content-to-cache ["js/main.js"
                        "./"
