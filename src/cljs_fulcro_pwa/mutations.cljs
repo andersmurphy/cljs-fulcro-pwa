@@ -3,16 +3,16 @@
             [com.fulcrologic.fulcro.algorithms.merge :as merge]))
 
 (defmutation delete-person
-  [{list-id :list/id person-id :person/id}]
+  [{screen-id :screen/id person-id :person/id}]
   (action [{:keys [state]}]
           (swap! state merge/remove-ident*
                  [:person/id person-id]
-                 [:list/id list-id :list/people])))
+                 [:screen/id screen-id :screen/people])))
 
-(defmutation next-person-list
-  [{{id :list/id} :container/content}]
+(defmutation next-screen
+  [{{id :screen/id} :container/content}]
   (action [{:keys [state]}]
-          (let [next-list-id (if (= id :friends) :enemies :friends)]
+          (let [next-screen-id (if (= id :login) :question :login)]
             (swap! state assoc-in
                    [:container/id :main-container :container/content]
-                   [:list/id next-list-id]))))
+                   [:screen/id next-screen-id]))))

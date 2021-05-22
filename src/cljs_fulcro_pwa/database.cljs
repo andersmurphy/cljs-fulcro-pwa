@@ -6,19 +6,28 @@
    3 {:person/id 3 :person/name "Fred"  :person/age 11}
    4 {:person/id 4 :person/name "Bobby" :person/age 55}})
 
-(def list-table
-  {:friends {:list/id :friends
-             :list/label "Friends"
-             :list/people [[:person/id 1] [:person/id 2]]}
-   :enemies {:list/id :enemies
-             :list/label "Enemies"
-             :list/people [[:person/id 3] [:person/id 4]]}})
+(def srceen-table
+  {:login     {:screen/id :login
+               :screen/label "Login"
+               :screen/people [[:person/id 1] [:person/id 2]]}
+   :question  {:screen/id :question
+               :screen/label "Questions about love"
+               :screen/people [[:person/id 3] [:person/id 4]]}
+   :pick-card {:screen/id :pick-card
+               :screen/label "Enemies"
+               :screen/people [[:person/id 3] [:person/id 4]]}
+   :your-card {:screen/id :your-card
+               :screen/label "Enemies"
+               :screen/people [[:person/id 3] [:person/id 4]]}
+   :reading   {:screen/id :reading
+               :screen/label "Enemies"
+               :screen/people [[:person/id 3] [:person/id 4]]}})
 
 (def container-table
   {:main-container {:container/id :main-container
-                    :container/content [:list/id :friends]}})
+                    :container/content [:screen/id :login]}})
 
 (def database
-  {:person/id person-table
-   :list/id   list-table
+  {:person/id    person-table
+   :screen/id    srceen-table
    :container/id container-table})
