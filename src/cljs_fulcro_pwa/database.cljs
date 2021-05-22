@@ -1,33 +1,60 @@
 (ns cljs-fulcro-pwa.database)
 
+(defn table-ns [table]
+  (-> table ffirst key namespace))
+
+(defn table-id-key [table]
+  (if-let [table-ns (table-ns table)]
+    (keyword (str table-ns "/id"))
+    :id))
+
+(defn by-id [table]
+  (->> (map (juxt(table-id-key table) identity) table)
+       (into {})))
+
+(defn build-db [tables]
+  (->> (map (juxt table-id-key by-id) tables)
+       (into {})))
+
 (def person-table
-  {1 {:person/id 1 :person/name "Sally" :person/age 32}
-   2 {:person/id 2 :person/name "Joe"   :person/age 22}
-   3 {:person/id 3 :person/name "Fred"  :person/age 11}
-   4 {:person/id 4 :person/name "Bobby" :person/age 55}})
+  #{{:person/id 1 :person/name "Sally" :person/age 32}
+    {:person/id 2 :person/name "Joe"   :person/age 22}
+    {:person/id 3 :person/name "Fred"  :person/age 11}
+    {:person/id 4 :person/name "Bobby" :person/age 55}})
 
 (def srceen-table
-  {:login     {:screen/id :login
-               :screen/label "Login"
-               :screen/people [[:person/id 1] [:person/id 2]]}
-   :question  {:screen/id :question
-               :screen/label "Questions about love"
-               :screen/people [[:person/id 3] [:person/id 4]]}
-   :pick-card {:screen/id :pick-card
-               :screen/label "Enemies"
-               :screen/people [[:person/id 3] [:person/id 4]]}
-   :your-card {:screen/id :your-card
-               :screen/label "Enemies"
-               :screen/people [[:person/id 3] [:person/id 4]]}
-   :reading   {:screen/id :reading
-               :screen/label "Enemies"
-               :screen/people [[:person/id 3] [:person/id 4]]}})
+  #{{:screen/id :login
+     :screen/type :login
+     :screen/label "Login"}
+    {:screen/id :question-1
+     :screen/type :question
+     :screen/label "Questions about love"}
+    {:screen/id :question-2
+     :screen/type :question
+     :screen/label "Questions about love"}
+    {:screen/id :question-3
+     :screen/type :question
+     :screen/label "Questions about love"}
+    {:screen/id :pick-card-1
+     :screen/type :pick-card}
+    {:screen/id :your-card-1
+     :screen/type :your-card}
+    {:screen/id :pick-card-2
+     :screen/type :pick-card}
+    {:screen/id :your-card-2
+     :screen/type :your-card}
+    {:screen/id :pick-card-3
+     :screen/type :pick-card}
+    {:screen/id :your-card-3
+     :screen/type :your-card}
+    {:screen/id :reading
+     :screen/type :reading}})
 
 (def container-table
-  {:main-container {:container/id :main-container
-                    :container/content [:screen/id :login]}})
+  #{{:container/id :main-container
+     :container/content [:screen/id :login]}})
 
 (def database
-  {:person/id    person-table
-   :screen/id    srceen-table
-   :container/id container-table})
+  (build-db [person-table
+             srceen-table
+             container-table]))

@@ -12,7 +12,7 @@
 (defmutation next-screen
   [{{id :screen/id} :container/content}]
   (action [{:keys [state]}]
-          (let [next-screen-id (if (= id :login) :question :login)]
+          (let [next-screen-id (if (= id :login) :question-1 :login)]
             (swap! state assoc-in
                    [:container/id :main-container :container/content]
                    [:screen/id next-screen-id]))))
