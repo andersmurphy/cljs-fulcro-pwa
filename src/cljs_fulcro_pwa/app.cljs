@@ -3,7 +3,6 @@
    [cljs-fulcro-pwa.ui :as ui]
    [cljs-fulcro-pwa.database :as db]
    [cljs-fulcro-pwa.static-html-writer :as html-writer]
-   [cljs-fulcro-pwa.service-worker :as sw]
    [com.fulcrologic.fulcro.application :as app]
    [com.fulcrologic.fulcro.components :as c]
    [com.fulcrologic.fulcro.algorithms.denormalize :as fdn]))
@@ -19,8 +18,7 @@
    [:meta {:name    "description"
            :content "This is a dercription"}]
    [:link {:rel "stylesheet" :type "text/css" :href "styles.css"}]
-   [:link {:rel "apple-touch-icon" :href "images/icon-192.png"}]
-   [:link {:rel "manifest" :href "manifest.json"}]]
+   [:link {:rel "apple-touch-icon" :href "images/icon-192.png"}]]
   [:body
    [:div {:id "app"}]
    [:script {:src "js/main.js"}]]])
@@ -28,7 +26,6 @@
 (defonce app (app/fulcro-app {:initial-db db/database}))
 
 (defn ^:export init []
-  (sw/register-service-worker)
   (app/mount! app ui/Root "app"))
 
 (defn ^:export refresh []
