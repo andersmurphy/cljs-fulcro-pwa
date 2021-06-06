@@ -16,45 +16,30 @@
   (->> (map (juxt table-id-key by-id) tables)
        (into {})))
 
-(def person-table
-  #{{:person/id 1 :person/name "Sally" :person/age 32}
-    {:person/id 2 :person/name "Joe"   :person/age 22}
-    {:person/id 3 :person/name "Fred"  :person/age 11}
-    {:person/id 4 :person/name "Bobby" :person/age 55}})
+(def question-table
+  #{{:question/id 1
+     :question/name "What is your name?"
+     :question/answer   ""}
+    {:question/id 2
+     :question/name "Who is your daddy?"
+     :question/answer   ""}
+    {:question/id 3
+     :question/name "What does he do?"
+     :question/answer   ""}})
 
 (def srceen-table
-  #{{:screen/id :login
-     :screen/type :login
-     :screen/label "Login"}
-    {:screen/id :question-1
-     :screen/type :question
-     :screen/label "Questions about love"}
+  #{{:screen/id :question-1
+     :screen/content [:question/id 1]}
     {:screen/id :question-2
-     :screen/type :question
-     :screen/label "Questions about love"}
+     :screen/content [:question/id 2]}
     {:screen/id :question-3
-     :screen/type :question
-     :screen/label "Questions about love"}
-    {:screen/id :pick-card-1
-     :screen/type :pick-card}
-    {:screen/id :your-card-1
-     :screen/type :your-card}
-    {:screen/id :pick-card-2
-     :screen/type :pick-card}
-    {:screen/id :your-card-2
-     :screen/type :your-card}
-    {:screen/id :pick-card-3
-     :screen/type :pick-card}
-    {:screen/id :your-card-3
-     :screen/type :your-card}
-    {:screen/id :reading
-     :screen/type :reading}})
+     :screen/content [:question/id 3]}})
 
 (def container-table
   #{{:container/id :main-container
-     :container/content [:screen/id :login]}})
+     :container/content [:screen/id :question-1]}})
 
 (def database
-  (build-db [person-table
+  (build-db [container-table
              srceen-table
-             container-table]))
+             question-table]))

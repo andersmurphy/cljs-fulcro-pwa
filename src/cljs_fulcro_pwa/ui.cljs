@@ -4,28 +4,18 @@
    [com.fulcrologic.fulcro.components :as c :refer [defsc]]
    [com.fulcrologic.fulcro.dom :as d]))
 
-(defsc Person [_ {:person/keys [id name age]}
-               {:keys [onDelete]}]
-  {:query [:person/id :person/name :person/age]
-   :ident :person/id}
-  (d/li
-   (d/h5 (str name " (age: " age ")"))
-   (d/button {:onClick #(onDelete id)} "X")))
+(defsc Question [_ {:question/keys [name]}]
+  {:query [:question/id :question/name]
+   :ident :question/id}
+  (d/h5 name))
 
-(def ui-person (c/computed-factory Person {:keyfn :person/id}))
+(def ui-question (c/factory Question))
 
-(defsc Screen [this {:screen/keys [id label people]}]
-  {:query [:screen/id :screen/label {:screen/people (c/get-query Person)}]
+(defsc Screen [_ {:screen/keys [content]}]
+  {:query [:screen/id :screen/label {:screen/content (c/get-query Question)}]
    :ident :screen/id}
-  (let [delete-person
-        (fn [person-id]
-          (c/transact!
-           this
-           [(api/delete-person {:screen/id id :person/id person-id})]))]
-    (d/div
-     (d/h4 label)
-     (d/ul
-      (map #(ui-person % {:onDelete delete-person}) people)))))
+  (d/div
+   (ui-question content)))
 
 (def ui-screen (c/factory Screen))
 
