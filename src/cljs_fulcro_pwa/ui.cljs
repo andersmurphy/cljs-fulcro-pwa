@@ -11,22 +11,14 @@
 
 (def ui-question (c/factory Question))
 
-(defsc Screen [_ {:screen/keys [content]}]
-  {:query [:screen/id :screen/label {:screen/content (c/get-query Question)}]
-   :ident :screen/id}
-  (d/div
-   (ui-question content)))
-
-(def ui-screen (c/factory Screen))
-
 (defsc Container [this {:container/keys [content]}]
-  {:query [:container/id {:container/content (c/get-query Screen)}]
+  {:query [:container/id {:container/content (c/get-query Question)}]
    :ident :container/id}
   (let [next-screen
         (fn [] (c/transact!
-                this [(api/next-screen {:container/content content})]))]
+                this [(api/next-screen content)]))]
     (d/div
-     (ui-screen content)
+     (ui-question content)
      (d/button {:onClick next-screen} "->"))))
 
 (def ui-container (c/factory Container))

@@ -27,19 +27,10 @@
      :question/name "What does he do?"
      :question/answer   ""}})
 
-(def srceen-table
-  #{{:screen/id :question-1
-     :screen/content [:question/id 1]}
-    {:screen/id :question-2
-     :screen/content [:question/id 2]}
-    {:screen/id :question-3
-     :screen/content [:question/id 3]}})
-
 (def container-table
   #{{:container/id :main-container
-     :container/content [:screen/id :question-1]}})
+     :container/content [:question/id 1]}})
 
 (def database
   (build-db [container-table
-             srceen-table
              question-table]))
