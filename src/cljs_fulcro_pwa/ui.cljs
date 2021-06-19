@@ -11,14 +11,28 @@
 
 (def ui-question (c/factory Question))
 
+(defsc Choice [_ {:choice/keys [name]}]
+  {:query [:choice/id :choice/name]
+   :ident :choice/id}
+  (d/h5 name))
+
+(def ui-choice (c/factory Choice))
+
 (defsc Container [this {:container/keys [content]}]
-  {:query [:container/id {:container/content (c/get-query Question)}]
+  {:query [:container/id
+           {:container/content
+            {:question/id (c/get-query Question)
+             :choice/id   (c/get-query Choice)}}]
    :ident :container/id}
-  (let [next-screen
+  (let [[content-ident id] (first content)
+        next-screen
         (fn [] (c/transact!
-                this [(api/next-screen content)]))]
+                this [(api/next-screen
+                       {:current-screen [content-ident id]})]))]
     (d/div
-     (ui-question content)
+     (case content-ident
+       :question/id (ui-question content)
+       :choice/id   (ui-choice content))
      (d/button {:onClick next-screen} "->"))))
 
 (def ui-container (c/factory Container))

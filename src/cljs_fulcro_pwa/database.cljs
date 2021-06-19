@@ -27,10 +27,16 @@
      :question/name "What does he do?"
      :question/answer   ""}})
 
+(def choice-table
+  #{{:choice/id 1
+     :choice/name "Choice!"
+     :choice/answer   ""}})
+
 (def container-table
   #{{:container/id :main-container
      :container/content [:question/id 1]}})
 
 (def database
   (build-db [container-table
-             question-table]))
+             question-table
+             choice-table]))
