@@ -3,13 +3,9 @@
 
 (def routes
   {[:question/id 1] [:question/id 2]
-   [:question/id 2] [:question/id 3]
-   [:question/id 3] [:choice/id   1]
+   [:question/id 2] [:choice/id   1]
    [:choice/id   1] [:question/id 1]})
 
-(defmutation next-screen
-  [{:keys [current-screen]}]
+(defmutation next-screen [_]
   (action [{:keys [state]}]
-          (swap! state assoc-in
-                 [:container/id :main-container :container/content]
-                 (routes current-screen))))
+          (swap! state update :root/current-screen routes)))

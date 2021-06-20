@@ -9,34 +9,35 @@
     :id))
 
 (defn by-id [table]
-  (->> (map (juxt(table-id-key table) identity) table)
+  (->> (map (juxt (table-id-key table) identity) table)
        (into {})))
 
-(defn build-db [tables]
+(defn build-db [root-state tables]
   (->> (map (juxt table-id-key by-id) tables)
-       (into {})))
+       (into root-state)))
+
+(def user-table
+  #{{:user/id 1}})
+
+(def reading-table
+  #{{:reading/id 1}})
 
 (def question-table
   #{{:question/id 1
      :question/name "What is your name?"
-     :question/answer   ""}
+     :question/answer :user/name}
     {:question/id 2
-     :question/name "Who is your daddy?"
-     :question/answer   ""}
-    {:question/id 3
-     :question/name "What does he do?"
-     :question/answer   ""}})
+     :question/name "What star were you born under?"
+     :question/answer :user/star-sign}})
 
 (def choice-table
   #{{:choice/id 1
-     :choice/name "Choice!"
-     :choice/answer   ""}})
-
-(def container-table
-  #{{:container/id :main-container
-     :container/content [:question/id 1]}})
+     :choice/name "What kind of reading?"
+     :choice/answer :reading/kind}})
 
 (def database
-  (build-db [container-table
+  (build-db {:root/current-screen [:question/id 1]}
+            [user-table
+             reading-table
              question-table
              choice-table]))

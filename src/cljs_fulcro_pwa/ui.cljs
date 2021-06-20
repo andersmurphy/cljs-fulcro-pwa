@@ -18,26 +18,25 @@
 
 (def ui-choice (c/factory Choice))
 
-(defsc Container [this {:container/keys [content]}]
-  {:query [:container/id
-           {:container/content
+(defsc Screen [this props]
+  {:query (fn []
             {:question/id (c/get-query Question)
-             :choice/id   (c/get-query Choice)}}]
-   :ident :container/id}
-  (let [[content-ident id] (first content)
-        next-screen
-        (fn [] (c/transact!
-                this [(api/next-screen
-                       {:current-screen [content-ident id]})]))]
+             :choice/id   (c/get-query Choice)})
+   :ident (fn []
+            (cond
+              (:question/id props) [:question/id (:question/id props)]
+              (:choice/id props)   [:choice/id   (:choice/id props)]))}
+  (let [screen      (first (c/get-ident this))
+        next-screen (fn [] (c/transact! this [(api/next-screen {})]))]
     (d/div
-     (case content-ident
-       :question/id (ui-question content)
-       :choice/id   (ui-choice content))
+     (case screen
+       :question/id (ui-question props)
+       :choice/id   (ui-choice props))
      (d/button {:onClick next-screen} "->"))))
 
-(def ui-container (c/factory Container))
+(def ui-screen (c/factory Screen))
 
-(defsc Root [_ {{:keys [:main-container]} :container/id}]
-  {:query [{:container/id [:container/id
-                           {:main-container (c/get-query Container)}]}]}
-  (d/div (ui-container main-container)))
+(defsc Root [_ {:root/keys [current-screen]}]
+  {:query [{:root/current-screen (c/get-query Screen)}]}
+  (d/div
+   (ui-screen current-screen)))
