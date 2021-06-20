@@ -1,5 +1,6 @@
 (ns cljs-fulcro-pwa.mutations
-  (:require [com.fulcrologic.fulcro.mutations :as m :refer [defmutation]]))
+  (:require [com.fulcrologic.fulcro.mutations :as m :refer [defmutation]]
+            [clojure.set :as set]))
 
 (def routes
   {[:question/id 1] [:question/id 2]
@@ -9,3 +10,10 @@
 (defmutation next-screen [_]
   (action [{:keys [state]}]
           (swap! state update :root/current-screen routes)))
+
+(def prev-routes
+  (set/map-invert routes))
+
+(defmutation prev-screen [_]
+  (action [{:keys [state]}]
+          (swap! state update :root/current-screen prev-routes)))

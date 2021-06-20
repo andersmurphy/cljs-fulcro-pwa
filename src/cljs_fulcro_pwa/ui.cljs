@@ -7,14 +7,14 @@
 (defsc Question [_ {:question/keys [name]}]
   {:query [:question/id :question/name]
    :ident :question/id}
-  (d/h5 name))
+  (d/div (d/h2 name)))
 
 (def ui-question (c/factory Question))
 
 (defsc Choice [_ {:choice/keys [name]}]
   {:query [:choice/id :choice/name]
    :ident :choice/id}
-  (d/h5 name))
+  (d/h2 name))
 
 (def ui-choice (c/factory Choice))
 
@@ -27,11 +27,13 @@
               (:question/id props) [:question/id (:question/id props)]
               (:choice/id props)   [:choice/id   (:choice/id props)]))}
   (let [screen      (first (c/get-ident this))
-        next-screen (fn [] (c/transact! this [(api/next-screen {})]))]
+        next-screen (fn [] (c/transact! this [(api/next-screen {})]))
+        prev-screen (fn [] (c/transact! this [(api/prev-screen {})]))]
     (d/div
      (case screen
        :question/id (ui-question props)
        :choice/id   (ui-choice props))
+     (d/button {:onClick prev-screen} "<-")
      (d/button {:onClick next-screen} "->"))))
 
 (def ui-screen (c/factory Screen))
