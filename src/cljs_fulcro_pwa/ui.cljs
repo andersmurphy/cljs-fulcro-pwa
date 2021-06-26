@@ -2,19 +2,39 @@
   (:require
    [cljs-fulcro-pwa.mutations :as api]
    [com.fulcrologic.fulcro.components :as c :refer [defsc]]
+   [com.fulcrologic.fulcro.mutations :as m]
+   [com.fulcrologic.fulcro.dom.events :as evt]
    [com.fulcrologic.fulcro.dom :as d]))
 
-(defsc Question [_ {:question/keys [name]}]
-  {:query [:question/id :question/name]
+(defsc Question [this {:question/keys [name answer]}]
+  {:query [:question/id :question/name :question/answer]
    :ident :question/id}
-  (d/div (d/h2 name)))
+  (js/console.log this)
+  (d/div (d/h2 name)
+         (d/input
+          {:value answer
+           :type "text"
+           :onChange
+           (fn [evt]
+             (m/set-value! this :question/answer (evt/target-value evt)))})))
 
 (def ui-question (c/factory Question))
 
-(defsc Choice [_ {:choice/keys [name]}]
-  {:query [:choice/id :choice/name]
+(defsc Choice [this {:choice/keys [name options]}]
+  {:query [:choice/id :choice/name :choice/options]
    :ident :choice/id}
-  (d/h2 name))
+  (d/div
+   (d/h2 name)
+   (map
+    (fn [{:keys [text value]}]
+      (js/console.log text)
+      (d/button
+       {:value value
+        :onClick
+        (fn [evt]
+          (m/set-value! this :choice/selected (evt/target-value evt)))}
+       text))
+    options)))
 
 (def ui-choice (c/factory Choice))
 

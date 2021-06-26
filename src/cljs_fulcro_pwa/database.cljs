@@ -16,28 +16,24 @@
   (->> (map (juxt table-id-key by-id) tables)
        (into root-state)))
 
-(def user-table
-  #{{:user/id 1}})
-
-(def reading-table
-  #{{:reading/id 1}})
-
 (def question-table
   #{{:question/id 1
      :question/name "What is your name?"
-     :question/answer :user/name}
+     :question/answer ""}
     {:question/id 2
      :question/name "What star were you born under?"
-     :question/answer :user/star-sign}})
+     :question/answer ""}})
 
 (def choice-table
   #{{:choice/id 1
      :choice/name "What kind of reading?"
-     :choice/answer :reading/kind}})
+     :choice/options [{:text "Love"    :value :love}
+                      {:text "Wealth"  :value :wealth}
+                      {:text "Career"  :value :career}
+                      {:text "Compass" :value :compass}]
+     :choice/selected nil}})
 
 (def database
   (build-db {:root/current-screen [:question/id 1]}
-            [user-table
-             reading-table
-             question-table
+            [question-table
              choice-table]))
