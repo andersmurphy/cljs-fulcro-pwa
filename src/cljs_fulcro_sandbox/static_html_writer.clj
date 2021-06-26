@@ -1,4 +1,4 @@
-(ns cljs-fulcro-pwa.static-html-writer
+(ns cljs-fulcro-sandbox.static-html-writer
   (:require [hiccup.core :refer [html]]))
 
 (defmacro write-index

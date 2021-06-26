@@ -1,8 +1,8 @@
-(ns cljs-fulcro-pwa.app
+(ns cljs-fulcro-sandbox.app
   (:require
-   [cljs-fulcro-pwa.ui :as ui]
-   [cljs-fulcro-pwa.database :as db]
-   [cljs-fulcro-pwa.static-html-writer :as html-writer]
+   [cljs-fulcro-sandbox.ui :as ui]
+   [cljs-fulcro-sandbox.database :as db]
+   [cljs-fulcro-sandbox.static-html-writer :as html-writer]
    [com.fulcrologic.fulcro.application :as app]
    [com.fulcrologic.fulcro.components :as c]
    [com.fulcrologic.fulcro.algorithms.denormalize :as fdn]))
@@ -14,7 +14,7 @@
            :content    "text/html; charset=UTF-8"}]
    [:meta {:name "viewport"
            :content "width=device-width, initial-scale=1.0"}]
-   [:title "CLJS PWA"]
+   [:title "CLJS Fulcro Sandbox"]
    [:meta {:name    "description"
            :content "This is a dercription"}]
    [:link {:rel "stylesheet" :type "text/css" :href "styles.css"}]

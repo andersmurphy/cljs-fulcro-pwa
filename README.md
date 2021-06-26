@@ -46,7 +46,7 @@ Production build from the shadow repl:
 
 Push changes and the project will deploy automatically to:
 
-https://andersmurphy.github.io/cljs-fulcro-pwa/
+https://andersmurphy.github.io/cljs-fulcro-sandbox/
 
 ## Documentation
 

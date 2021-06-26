@@ -1,4 +1,4 @@
-(ns cljs-fulcro-pwa.database)
+(ns cljs-fulcro-sandbox.database)
 
 (defn table-ns [table]
   (-> table ffirst key namespace))

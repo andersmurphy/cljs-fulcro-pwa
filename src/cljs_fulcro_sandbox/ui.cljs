@@ -1,6 +1,6 @@
-(ns cljs-fulcro-pwa.ui
+(ns cljs-fulcro-sandbox.ui
   (:require
-   [cljs-fulcro-pwa.mutations :as api]
+   [cljs-fulcro-sandbox.mutations :as api]
    [com.fulcrologic.fulcro.components :as c :refer [defsc]]
    [com.fulcrologic.fulcro.mutations :as m]
    [com.fulcrologic.fulcro.dom.events :as evt]

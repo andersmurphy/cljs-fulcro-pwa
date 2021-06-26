@@ -1,4 +1,4 @@
-(ns cljs-fulcro-pwa.mutations
+(ns cljs-fulcro-sandbox.mutations
   (:require [com.fulcrologic.fulcro.mutations :as m :refer [defmutation]]
             [clojure.set :as set]))
 
