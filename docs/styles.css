@@ -1,0 +1,15 @@
+* {
+    font-family: "Sofia", sans-serif;
+}
+
+html {
+    background-color: #191950;
+    color: #e1e1e1;
+}
+
+button {
+    background-color: #191950;
+    color: #e1e1e1;
+    border-radius: 8px;
+    border: 1px solid #e1e1e1;
+}

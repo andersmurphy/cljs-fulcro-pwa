@@ -30,6 +30,7 @@
       (js/console.log text)
       (d/button
        {:value value
+        :key value
         :onClick
         (fn [evt]
           (m/set-value! this :choice/selected (evt/target-value evt)))}
@@ -60,5 +61,6 @@
 
 (defsc Root [_ {:root/keys [current-screen]}]
   {:query [{:root/current-screen (c/get-query Screen)}]}
-  (d/div
-   (ui-screen current-screen)))
+  (d/div {:style {:display "grid"
+                  :placeItems "center"}}
+         (ui-screen current-screen)))
