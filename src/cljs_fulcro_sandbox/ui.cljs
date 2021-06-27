@@ -66,21 +66,20 @@
               (:question/id props) [:question/id (:question/id props)]
               (:choice/id props)   [:choice/id   (:choice/id props)]))}
   (let [screen      (first (c/get-ident this))]
-    (d/div
-     (case screen
-       :question/id (ui-question props)
-       :choice/id   (ui-choice props)))))
+    (d/div {:style {:flex "1"}}
+           (case screen
+             :question/id (ui-question props)
+             :choice/id   (ui-choice props)))))
 
 (def ui-screen (c/factory Screen))
 
 (defsc Root [_ {:root/keys [current-screen]}]
   {:query [{:root/current-screen (c/get-query Screen)}]}
-  (d/div {:style {:display         "grid"
-                  :placeItems      "center"
+  (d/div {:style {:height          "100%"
+                  :display         "flex"
+                  :flexDirection   "column"
                   :backgroundColor "#191950"
-                  :color           "#e1e1e1"
-                  :maxWidth        "500px"
-                  :height          "100vh"
-                  :marginLeft      "auto"
-                  :marginRight     "auto"}}
-         (ui-screen current-screen)))
+                  :color           "#e1e1e1"}}
+         (d/div {:style {:flex "1"}})
+         (ui-screen current-screen)
+         (d/div {:style {:flex "1"}})))
