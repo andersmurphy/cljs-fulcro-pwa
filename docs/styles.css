@@ -1,10 +1,25 @@
 * {
-    font-family: "Sofia", sans-serif;
+    font-family: "Roboto", sans-serif;
+    margin: 0;
+    padding: 0;
+    border: 0;
+    font-size: 100%;
+    vertical-align: baseline;
 }
 
-html {
+input:focus,
+select:focus,
+textarea:focus,
+button:focus {
+    outline: none;
+}
+
+input {
     background-color: #191950;
     color: #e1e1e1;
+    border-radius: 8px;
+    border: 1px solid #e1e1e1;
+    box-sizing: border-box;
 }
 
 button {

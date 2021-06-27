@@ -17,7 +17,7 @@
    [:title "CLJS Fulcro Sandbox"]
    [:meta {:name    "description"
            :content "This is a dercription"}]
-   [:link {:rel "stylesheet" :type "text/css" :href "https://fonts.googleapis.com/css?family=Sofia"}]
+   [:link {:rel "stylesheet" :type "text/css" :href "https://fonts.googleapis.com/css?family=Roboto"}]
    [:link {:rel "stylesheet" :type "text/css" :href "styles.css"}]
 
    [:link {:rel "apple-touch-icon" :href "images/icon-192.png"}]]

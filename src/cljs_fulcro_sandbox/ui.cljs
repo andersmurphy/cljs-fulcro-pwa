@@ -9,33 +9,51 @@
 (defsc Question [this {:question/keys [name answer]}]
   {:query [:question/id :question/name :question/answer]
    :ident :question/id}
-  (js/console.log this)
-  (d/div (d/h2 name)
-         (d/input
-          {:value answer
-           :type "text"
-           :onChange
-           (fn [evt]
-             (m/set-value! this :question/answer (evt/target-value evt)))})))
+  (let [next-screen (fn [] (c/transact! this [(api/next-screen {})]))]
+    (d/div {:style {:fontSize "3vh"
+                    :padding   "32px"}}
+           (d/h2 name)
+           (d/input
+            {:style {:width "100%"
+                     :padding "8px"
+                     :marginTop  "16px"
+                     :marginBottom  "16px"}
+             :value answer
+             :type "text"
+             :onChange
+             (fn [evt]
+               (m/set-value! this :question/answer (evt/target-value evt)))})
+           (d/button {:style {:width "100%"
+                              :padding "8px"
+                              :marginTop  "16px"
+                              :marginBottom  "16px"}
+                      :onClick next-screen} "Next"))))
 
 (def ui-question (c/factory Question))
 
 (defsc Choice [this {:choice/keys [name options]}]
   {:query [:choice/id :choice/name :choice/options]
    :ident :choice/id}
-  (d/div
-   (d/h2 name)
-   (map
-    (fn [{:keys [text value]}]
-      (js/console.log text)
-      (d/button
-       {:value value
-        :key value
-        :onClick
-        (fn [evt]
-          (m/set-value! this :choice/selected (evt/target-value evt)))}
-       text))
-    options)))
+  (let [next-screen (fn [] (c/transact! this [(api/next-screen {})]))]
+    (d/div
+     {:style {:fontSize "3vh"
+              :padding   "32px"}}
+     (d/h2 name)
+     (map
+      (fn [{:keys [text value]}]
+        (d/button
+         {:style {:width "100%"
+                  :padding "8px"
+                  :marginTop  "16px"
+                  :marginBottom  "16px"}
+          :value value
+          :key value
+          :onClick
+          (fn [evt]
+            (m/set-value! this :choice/selected (evt/target-value evt))
+            (next-screen))}
+         text))
+      options))))
 
 (def ui-choice (c/factory Choice))
 
@@ -47,20 +65,22 @@
             (cond
               (:question/id props) [:question/id (:question/id props)]
               (:choice/id props)   [:choice/id   (:choice/id props)]))}
-  (let [screen      (first (c/get-ident this))
-        next-screen (fn [] (c/transact! this [(api/next-screen {})]))
-        prev-screen (fn [] (c/transact! this [(api/prev-screen {})]))]
+  (let [screen      (first (c/get-ident this))]
     (d/div
      (case screen
        :question/id (ui-question props)
-       :choice/id   (ui-choice props))
-     (d/button {:onClick prev-screen} "<-")
-     (d/button {:onClick next-screen} "->"))))
+       :choice/id   (ui-choice props)))))
 
 (def ui-screen (c/factory Screen))
 
 (defsc Root [_ {:root/keys [current-screen]}]
   {:query [{:root/current-screen (c/get-query Screen)}]}
-  (d/div {:style {:display "grid"
-                  :placeItems "center"}}
+  (d/div {:style {:display         "grid"
+                  :placeItems      "center"
+                  :backgroundColor "#191950"
+                  :color           "#e1e1e1"
+                  :maxWidth        "500px"
+                  :height          "100vh"
+                  :marginLeft      "auto"
+                  :marginRight     "auto"}}
          (ui-screen current-screen)))

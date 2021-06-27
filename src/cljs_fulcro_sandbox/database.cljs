@@ -21,7 +21,7 @@
      :question/name "What is your name?"
      :question/answer ""}
     {:question/id 2
-     :question/name "What star were you born under?"
+     :question/name "When were you born?"
      :question/answer ""}})
 
 (def choice-table
