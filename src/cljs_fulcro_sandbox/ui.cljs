@@ -4,15 +4,26 @@
    [com.fulcrologic.fulcro.components :as c :refer [defsc]]
    [com.fulcrologic.fulcro.mutations :as m]
    [com.fulcrologic.fulcro.dom.events :as evt]
-   [com.fulcrologic.fulcro.dom :as d]))
+   [com.fulcrologic.fulcro.dom :as d]
+   [com.fulcrologic.fulcro.algorithms.react-interop :as interop]
+   [react-spring :as spring]))
+
+(def ui-animated-div (interop/react-factory spring/animated.div))
 
 (defsc Question [this {:question/keys [name answer]}]
   {:query [:question/id :question/name :question/answer]
-   :ident :question/id}
+   :ident :question/id
+   :use-hooks? true}
   (let [next-screen (fn [] (c/transact! this [(api/next-screen {})]))]
     (d/div {:style {:fontSize "3vh"
                     :padding   "32px"}}
-           (d/h2 name)
+           (ui-animated-div
+            {:style
+             (spring/useSpring
+              (clj->js {:from {:opacity 0}
+                        :to {:opacity 1}
+                        :delay 200}))}
+            (d/h2 name))
            (d/input
             {:style {:width "100%"
                      :padding "8px"
